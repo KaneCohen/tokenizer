@@ -1,0 +1,93 @@
+.tokenizer {
+	padding: 4px 4px 0;
+	position: relative;
+	background: #fff;
+	display: table;
+}
+
+.tokenizer .tokenizer-typehead {
+	margin: 0 0 2px;
+	padding: 2px 4px;
+	float: left;
+	font-size: 13px;
+	background: transparent;
+	resize: none;
+	-webkit-box-sizing: border-box;
+	   -moz-box-sizing: border-box;
+	    -ms-box-sizing: border-box;
+	        box-sizing: border-box;
+}
+
+.tokenizer-list-wrapper {
+	width: 100%;
+	min-width: 200px;
+	max-height: 200px;
+	margin: 4px 0 0;
+	padding: 4px;
+	position: absolute;
+	left: 0;
+	display: block;
+	background: #fff;
+	z-index: 3;
+	-webkit-border-radius: 2px;
+	   -moz-border-radius: 2px;
+	    -ms-border-radius: 2px;
+	        border-radius: 2px;
+	-webkit-box-sizing: border-box;
+	   -moz-box-sizing: border-box;
+	    -ms-box-sizing: border-box;
+	        box-sizing: border-box;
+	-webkit-box-shadow: 0 0 16px rgba(0,0,0,0.4);
+	   -moz-box-shadow: 0 0 16px rgba(0,0,0,0.4);
+	    -ms-box-shadow: 0 0 16px rgba(0,0,0,0.4);
+	        box-shadow: 0 0 16px rgba(0,0,0,0.4);
+}
+
+.tokenizer ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.tokenizer .item {
+	margin: 0 4px 4px 0;
+	padding: 2px 4px;
+	float: left;
+	line-height: 18px;
+	background: #eee;
+	-webkit-border-radius: 2px;
+	   -moz-border-radius: 2px;
+	    -ms-border-radius: 2px;
+	        border-radius: 2px;
+}
+
+.tokenizer .item-remove {
+	height: 12px;
+	width: 10px;
+	margin: 4px 0 0 2px;
+	padding: 0 1px 0 0;
+	float: right;
+	text-align: center;
+	line-height: 10px;
+	font-weight: bold;
+	cursor: pointer;
+	-webkit-border-radius: 2px;
+	   -moz-border-radius: 2px;
+	    -ms-border-radius: 2px;
+	        border-radius: 2px;
+}
+
+.tokenizer .item-remove:hover {
+	color: #fff;
+	background: #0085d1;
+}
+
+.tokenizer li {
+	margin: 0 -4px;
+	padding: 4px 8px;
+}
+
+.tokenizer-list-wrapper li.selected {
+	background: #eaedf0;
+	color: #000;
+}
