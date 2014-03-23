@@ -1,7 +1,7 @@
 /**
  * Tag manager plugin for jQuery.
- * version 0.1.0
- * Kane Cohen [KaneCohen@gmail.com] | https://github.com/KaneCohen | https://github.com/KaneCohen/exposer
+ * version 0.1.1
+ * Kane Cohen [KaneCohen@gmail.com] | https://github.com/KaneCohen | https://github.com/KaneCohen/tokenizer
  * @preserve
  */
 (function(factory) {
@@ -55,6 +55,7 @@
 		wrapper:     null,  // Wrapper element for our input.
 		typehead:    null,  // Typehead element.
 		listWrapper: null,
+		list:        null,
 		itemsList:   null,
 		activeItems: [],
 		cache:       {},
@@ -158,6 +159,9 @@
 			v.wrapper.css({width: o.element.width()});
 			v.itemsList = $(v.html.itemsWrapper);
 			v.wrapper.prepend(v.itemsList);
+
+			v.listWrapper = $(v.html.listWrapper).hide();
+			v.wrapper.append(v.listWrapper);
 
 			o.element.hide();
 			o.element.data('tokenizer', this);
@@ -314,8 +318,8 @@
 			    keyName = this.v.keys[e.keyCode],
 			    val = $.trim(this.v.typehead.val()),
 			    id = false;
-			if (this.v.listWrapper) {
-				id = this.v.listWrapper.find('li.selected').data('id');
+			if (this.v.list) {
+				id = this.v.list.find('li.selected').data('id');
 			}
 			switch (keyName) {
 				case 'esc':
@@ -333,7 +337,7 @@
 							this.v.ajaxCall.abort();
 							this.v.ajaxCall = null;
 						}
-						if (this.v.listWrapper) {
+						if (this.v.list) {
 							this.addItem(id);
 							this.refreshInput();
 						} else if (val.length > 0) {
@@ -369,7 +373,7 @@
 		},
 
 		selectPrevItem: function() {
-			var list = this.v.listWrapper;
+			var list = this.v.list;
 			if (list) {
 				var s = list.find('li.selected');
 				var index = s.index();
@@ -385,7 +389,7 @@
 		},
 
 		selectNextItem: function() {
-			var list = this.v.listWrapper;
+			var list = this.v.list;
 			if (list) {
 				var s = list.find('li.selected');
 				var l = list.find('li').length;
@@ -436,10 +440,9 @@
 		},
 
 		destroyList: function() {
-			if (this.v.listWrapper) {
-				var list = this.v.listWrapper[0];
-				list.parentNode.removeChild(list);
-				this.v.listWrapper = null;
+			if (this.v.list) {
+				this.v.listWrapper.hide().empty();
+				this.v.list = null;
 			}
 		},
 
@@ -447,15 +450,18 @@
 			var self = this,
 					o = this.o,
 					v = this.v,
-					list = $(this.v.html.list),
 					b = this.bounds();
 
-			// Create list.
 			newItems = this.trigger('parseItems', items, this);
 			if (newItems.length != undefined && newItems.length >= 0) {
 				items = newItems;
 			}
+			if (items.length === 0) {
+				return false;
+			}
 
+			// Create list.
+			v.list = $(v.html.list);
 			$.each(items, function(k,v) {
 				if (k >= o.listLength) return false;
 
@@ -470,19 +476,13 @@
 						el.addClass('selected');
 					}
 				}
-				list.append(el);
+				self.v.list.append(el);
 			});
 
-			this.destroyList();
-			if (items.length === 0) {
-				return false;
-			}
-			list.wrap(v.html.listWrapper);
-			v.listWrapper = list.parent();
+			v.listWrapper.html(v.list);
 			v.listWrapper.addClass(this.v.classes.list)
-				.css({top: b.height});
+				.css({top: b.height}).show();
 
-			v.wrapper.append(v.listWrapper);
 			this.trigger('listShow');
 		},
 
@@ -629,7 +629,7 @@
 
 		resizeInput: function(val) {
 			var style = window.getComputedStyle(this.v.wrapper[0]);
-			var compensate = parseInt(style['padding-left'], 10) + parseInt(style['padding-right'], 10);
+			var compensate = parseInt(style['padding-left'], 10) + parseInt(style['paddingRight'], 10);
 			var b = this.bounds();
 
 			if ($('#tokenizer-text-length').length === 0) {
@@ -644,7 +644,7 @@
 						position: 'fixed',
 						top: -100,
 						left: -1000,
-						fontSize: style['font-size']
+						fontSize: style['fontSize']
 					}).text(val);
 				$('body').append(textHolder);
 			} else {
@@ -654,7 +654,7 @@
 
 			// Set low width to stack if there's still some place.
 			this.v.typehead[0].style.width = '20px';
-			var rw = b.width - this.v.typehead.position().left - parseInt(style['padding-left'], 10);
+			var rw = b.width - this.v.typehead.position().left - parseInt(style['paddingLeft'], 10);
 			if (w > rw) {
 				this.v.typehead[0].style.width = b.width - compensate + 'px';
 			} else {
