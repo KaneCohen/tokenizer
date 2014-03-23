@@ -100,7 +100,7 @@
 			newItems:         true,     // Allow input (on enter) of new items.
 			multiple:         true,     // Accept multiple tags per field.
 			ajaxType:         'GET',    // Ajax request type.
-			url:              false,    // Server url.
+			url:              false,    // Full server url.
 			queryParam:       'q',      // What param to use when asking server for data.
 			limit:            false,    // Add a limit parameter to query.
 			ajaxDelay:        300,      // Dealy between last keydown event and ajax request for data.
@@ -109,7 +109,7 @@
 			noSubmit:         true,     // Do not submit form on enter.
 			start:            null ,    // Run once when we assign autoSelect to the element.
 			listLength:       8,        // Max items in the list.
-			itemName:         'items',  // If set, to out input element in item will be added property name with array: name="itemNameAttr[]".
+			itemName:         'items',  // If set, for each tag/token there will be added input field with array property name: name="itemNameAttr[]".
 			newItemSuffix:    'New',    // Suffix that will be added to the new tag in case it was not available from the server.
 			itemProp:         'id',     // Value that will be taken out of the results and inserted into itemAttr.
 			newItemProp:      'name',   // What prop to use when creating new item.
