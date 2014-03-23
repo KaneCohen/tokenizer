@@ -17,8 +17,9 @@ Client side:
 $('input').tokenizer({url: 'http://example.com/tags')});
 ````
 
-Server side:
 Tokenizer is quite opinionated in what type of data it woul digest from the server.
+
+Server side:
 
 1. Server must return JSON data
 2. Data must be an array of Objects
